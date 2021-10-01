@@ -1,0 +1,2 @@
+#!/bin/bash
+mongo tiny-url --eval 'db.url.find()'
