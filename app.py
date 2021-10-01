@@ -28,11 +28,13 @@ def shorten():
     url = request.args.get('url')
     if (not url):
         return 'Missing URL', 400
-    
-    slug=id_generator()
-    mongo.db.url.insert({'url': url, 'slug': slug})
 
-    return slug
+    while True:
+        slug=id_generator()
+        if (not mongo.db.url.find_one({'slug': slug})):
+            mongo.db.url.insert({'url': url, 'slug': slug})
+            return slug
+
 
 @app.route("/<short_id>")
 def view_data(short_id):
