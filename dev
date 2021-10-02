@@ -1,5 +1,8 @@
 #!/bin/bash
-source ./env/bin/activate
+if [ -f ./env/bin/activate ]; then
+  source ./env/bin/activate
+fi
+
 cd ./app
 env FLASK_APP=app.py \
   FLASK_DEBUG=true \

@@ -1,3 +1,19 @@
-* install mongo
-* install requirements
-* ./run
+Hours taken:
+  4 hours w/o docker, 7 hours with
+
+Run with Docker:
+    $ docker-compose up -d
+    setup mongo user
+      $ docker exec -it mongodb bash
+      $ mongo -u mongodbuser -p your_mongodb_root_password
+      $ use flaskdb
+      $ db.createUser({user: 'flaskuser', pwd: 'your_mongodb_password', roles: [{role: 'readWrite', db: 'flaskdb'}]})
+      $ exit
+      $ mongo -u flaskuser -p your_mongodb_password --authenticationDatabase flaskdb
+    hosts on localhost:5000
+
+Run without Docker:
+    $ install mongo
+    $ install python requirements
+    $ ./dev
+    hosts on localhost:5000
