@@ -1,6 +1,8 @@
 import os
 import string
 import random
+import re
+
 from flask import Flask,render_template,send_from_directory,request,redirect
 from flask_pymongo import PyMongo
 
@@ -44,7 +46,9 @@ def shorten():
 @application.route("/<short_id>")
 def view_data(short_id):
     doc = mongo.db.url.find_one_or_404({"slug": short_id})
-    return redirect('http://'+doc['url'], code=302)
+    url = doc['url']
+    url = url if re.match(r"https?:\/\/") else 'https://'+url
+    return redirect(url, code=302)
 
 if __name__ == "__main__":
     ENVIRONMENT_DEBUG = os.getenv("APP_DEBUG", True)
