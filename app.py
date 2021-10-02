@@ -17,6 +17,10 @@ def id_generator(size=8, chars=string.digits + string.ascii_lowercase):
 @app.route('/favicon.png')
 def favicon():
     return send_from_directory(staticDir(), 'favicon.png', mimetype='image/png')
+@app.route('/main.js')
+def mainjs():
+    return send_from_directory(staticDir(), 'main.js')
+
 
 @app.route("/")
 @app.route("/index")
@@ -33,7 +37,7 @@ def shorten():
         slug=id_generator()
         if (not mongo.db.url.find_one({'slug': slug})):
             mongo.db.url.insert({'url': url, 'slug': slug})
-            return slug
+            return render_template('index.html', url=request.url_root+slug)
 
 
 @app.route("/<short_id>")
